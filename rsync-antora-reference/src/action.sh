@@ -106,7 +106,7 @@ __action() {
   local ssh_host="${docs_username}@${docs_host}"
 
   (
-    # set -e
+    set -e
     set -f
 
     local ssh_host_path="/opt/www/domains/spring.io/docs/htdocs/$github_repository_name/reference/"
@@ -120,7 +120,7 @@ __action() {
     echo "rsync exited with code $?"
   )
   exit_code=$?
-
+  echo "exit_code value $exit_code"
   cleanup_ssh.sh --ssh-private-key-path "$ssh_private_key_path"
 
   exit $exit_code
