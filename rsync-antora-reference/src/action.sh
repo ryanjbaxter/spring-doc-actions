@@ -117,6 +117,7 @@ __action() {
       ssh -i "$ssh_private_key_path" "$ssh_host" 'bash -s' < "$pwd/check_github_repository_owner.sh" -- --github-repository "\"$github_repository\"" --ssh-docs-path "\"$ssh_host_path\""
     fi
     rsync_docs.sh --ssh-host "$ssh_host" --ssh-host-path "$ssh_host_path" --local-path "$site_path" --ssh-private-key-path "$ssh_private_key_path" $rsync_flag_options
+    echo "rsync exited with code $?"
   )
   exit_code=$?
 
