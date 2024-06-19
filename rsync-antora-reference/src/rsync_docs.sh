@@ -92,12 +92,12 @@ __rsync_docs() {
     rsync_opts="-c $rsync_opts$(find $local_path -mindepth 1 -maxdepth 1 \! -name 404.html \! -name '.*' -type f -printf ' --include /%P')"
     rsync_opts="$rsync_opts$(find $local_path -mindepth 1 -maxdepth 1 -type d \! -name _ -printf ' --include /%P --include /%P/**') --exclude **"
   fi
-  # Disable filename expansion (globbing)
-  # https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
-  set -f
-  rsync $rsync_opts -e "ssh -i $ssh_private_key_path" $local_path/ "$ssh_host:$ssh_host_path"
-  echo "rsync exit code $?"
-  set +f
+  (
+    # Disable filename expansion (globbing)
+    # https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
+    set -f
+    rsync $rsync_opts -e "ssh -i $ssh_private_key_path" $local_path/ "$ssh_host:$ssh_host_path"
+  )
 }
 
 
